@@ -3,6 +3,6 @@ import productReducer from "./product/product.reducer";
 
 const rootReducer = combineReducers({
   // All the reducers goes here
-  products: productReducer,
+  term: productReducer,
 });
 export default rootReducer;

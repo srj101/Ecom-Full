@@ -1,12 +1,12 @@
 const INITIAL_STATE = {
-  //SearchQuery: [],
+  tag: "",
 };
-const productReducer = (state = {}, action) => {
+const productReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "TRIGGER_SEARCH":
       return {
         ...state,
-        //SearchQuery: [...SearchQuery, action.paylod],
+        state: action.payload,
       };
     default:
       return state;

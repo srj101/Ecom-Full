@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./shopCatalog.style.css";
 import { Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { gql, useQuery } from "@apollo/client";
-import { useLocation } from "react-router";
 const SHOP_PRODUCTS = gql`
   query products($searchProductsInput: SearchInput!) {
     SearchProducts(input: $searchProductsInput) {
@@ -18,8 +18,7 @@ const SHOP_PRODUCTS = gql`
   }
 `;
 function ShopCatelog() {
-  let location = useLocation();
-
+  const term = useSelector((state) => state.term);
   const [Tag, setTag] = useState("");
   const [Color, setColor] = useState("");
   const [Cat, setCat] = useState("");
@@ -33,10 +32,9 @@ function ShopCatelog() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    if (location.pathname.split("/")[2] === "tag") {
-      setTag(location.pathname.split("/")[3]);
-      console.log(Tag);
-    }
+    setTag(term.state);
+    console.log(term);
+
     setProducts(data?.SearchProducts);
   }, [data]);
 
