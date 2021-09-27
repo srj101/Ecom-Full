@@ -1,0 +1,30 @@
+.right-icons {
+  display: flex;
+  justify-content: right;
+}
+.right-icon {
+  padding: 0 6px;
+  cursor: pointer;
+  position: relative;
+}
+.side-drawer {
+  height: 100vh;
+}
+.right-icon a {
+  color: #222;
+}
+.right-icon a:hover {
+  color: #222;
+}
+.right-icon .count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  color: #fff;
+  border-radius: 50%;
+  line-height: 11px;
+  font-size: 13px;
+  padding: 2px;
+  z-index: -1;
+}

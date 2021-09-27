@@ -1,0 +1,14 @@
+.header_container {
+  box-shadow: 0 0 3px #ddd;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+  background: #fff;
+  padding: 21px 0;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+}

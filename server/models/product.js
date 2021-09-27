@@ -17,14 +17,13 @@ const descSchema = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-    },
+    name: String,
     SKU: String,
     price: Number,
     offerPrice: Number,
     image: [String],
     categoryid: String,
+    catName: String,
     colors: [colorSchema],
     tags: [tagsSchema],
     new: {

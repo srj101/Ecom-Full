@@ -1,5 +1,19 @@
 import { gql } from "apollo-server";
 const typeDefs = gql`
+  type User {
+    id: ID!
+    firstname: String!
+    lastname: String
+    password: String!
+    email: String!
+    nickname: String!
+    phone: String!
+    address: String!
+    profilepic: String
+    count: Int
+    orders: [Product]
+  }
+
   type Category {
     id: ID
     catname: String
@@ -31,6 +45,7 @@ const typeDefs = gql`
     name: String
     stock: Int
     categoryid: String
+    catName: String
     desc: [descType]
     new: Boolean
     best_seller: Boolean
@@ -76,6 +91,7 @@ const typeDefs = gql`
     best_seller: Boolean
     price: Float
     categoryid: String
+    catName: String
     desc: [descTypeIn]
     image: [String]
     colors: [colorTypeIn]
@@ -91,20 +107,40 @@ const typeDefs = gql`
     email: String
   }
 
+  input userinput {
+    firstname: String!
+    lastname: String
+    email: String!
+    password: String!
+    nickname: String!
+    phone: String!
+    address: String!
+  }
+
+  input SearchInput {
+    colorName: String
+    tag: String
+    catName: String
+  }
+
   type Query {
     products: [Product]
     reviews: [Review]
     productByID(id: String!): Product
-    productByColor(colorName: String): [Product]
-    productByTag(tag: String): [Product]
     categories: [Category]
     newArivals: [Product]
+    userProfile: User
+    SearchProducts(input: SearchInput!): [Product]
   }
 
   type Mutation {
     createProduct(input: ProductContents): Product
     createReviews(input: ReviewContents): Review
     createCategories(catname: String!, catimage: String!): Category
+    registration(input: userinput!): String
+    login(email: String!, password: String!): String
+    invalidateTokens: Boolean!
+    deleteProduct(id: String!): String
   }
 `;
 

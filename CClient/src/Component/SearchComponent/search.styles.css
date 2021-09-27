@@ -1,0 +1,18 @@
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+}
+
+.search-form input {
+  border: 0px;
+  border-bottom: 1px solid #222;
+  color: #000;
+  font-size: 50px;
+  background: transparent;
+}
+input[type="text"]:focus {
+  outline: none !important;
+}

@@ -1,0 +1,32 @@
+.four-o-four {
+  height: 93.3vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fouro-top-bg {
+  height: 100%;
+  width: 100vw;
+}
+
+.fouro-top-bg img {
+  height: 100%;
+  width: 100%;
+}
+
+.fouro-top {
+  height: 80%;
+  position: relative;
+}
+
+.fouro-content {
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  transform: translate(-50%, -50%);
+}
+.fouro-content a {
+  color: #222;
+}
