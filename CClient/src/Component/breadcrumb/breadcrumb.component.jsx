@@ -2,12 +2,17 @@ import React from "react";
 import "./breadcrumb.style.css";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 function BreadCrumb({ title }) {
+  const term = useSelector((state) => state.term);
+
   const breadcrumbs = useBreadcrumbs();
   return (
     <div className="breadcrumb">
       <>
-        <h3 className="bread-title">{title}</h3>
+        <h3 className="bread-title">
+          {term.state ? `Search Result for: ${term.state}` : title}
+        </h3>
         <div className="bread-lins">
           {breadcrumbs.map(({ match, breadcrumb }) => (
             <span key={match.url}>

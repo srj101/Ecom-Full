@@ -18,41 +18,34 @@ const resolvers = {
         const { tag, colorName, catName } = input;
 
         if (catName && colorName && tag) {
-          console.log("cat,colorName,tag ===>", tag);
           Products = await Product.find({
             tags: { $elemMatch: { tag: new RegExp(tag, "i") } },
             colors: { $elemMatch: { colorName: new RegExp(colorName, "i") } },
             catName: new RegExp(catName, "i"),
           });
         } else if (tag && !colorName && !catName) {
-          console.log("tag");
           Products = await Product.find({
             tags: { $elemMatch: { tag: new RegExp(tag, "i") } },
           });
         } else if (colorName && !tag && !catName) {
-          console.log("colorName");
           Products = await Product.find({
             colors: { $elemMatch: { colorName: new RegExp(colorName, "i") } },
           });
         } else if (catName && !tag && !colorName) {
-          console.log("cat");
           Products = await Product.find({
             catName: new RegExp(catName, "i"),
           });
         } else if (catName && tag && !colorName) {
-          console.log("cat,tag");
           Products = await Product.find({
             tags: { $elemMatch: { tag: new RegExp(tag, "i") } },
             catName: new RegExp(catName, "i"),
           });
         } else if (catName && colorName && !tag) {
-          console.log("cat,colorName");
           Products = await Product.find({
             catName: new RegExp(catName, "i"),
             colors: { $elemMatch: { colorName: new RegExp(colorName, "i") } },
           });
         } else if (tag && colorName && !catName) {
-          console.log("colorName,tag");
           Products = await Product.find({
             tags: { tag: new RegExp(tag, "i") },
             colors: { colorName: new RegExp(colorName, "i") },

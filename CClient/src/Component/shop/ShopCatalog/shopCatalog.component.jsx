@@ -36,7 +36,7 @@ function ShopCatelog() {
     console.log(term);
 
     setProducts(data?.SearchProducts);
-  }, [data]);
+  }, [data, term.state]);
 
   if (error) {
     return error.message;
