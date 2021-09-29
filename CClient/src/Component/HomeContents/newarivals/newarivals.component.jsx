@@ -85,7 +85,7 @@ const NewArivals = () => {
                   <h1 class="title">
                     Feeling relax day, <br /> Enjoy weekend
                   </h1>
-                  <Link to={`/shop/category/${image[2]}`} className="shop-now">
+                  <Link to={`/shop/`} className="shop-now">
                     Shop Now!
                   </Link>
                 </div>
@@ -98,42 +98,3 @@ const NewArivals = () => {
 };
 
 export default NewArivals;
-
-// {
-//   "data": {
-//     "categories": [
-//       {
-//         "catname": "Decor",
-//         "id": "6146d5962eb39a39da2d7fec"
-//       },
-//       {
-//         "catname": "Fashion",
-//         "id": "6146d5e12eb39a39da2d7fef"
-//       },
-//       {
-//         "catname": "Jwellery",
-//         "id": "6146d5eb2eb39a39da2d7ff2"
-//       },
-//       {
-//         "catname": "Women",
-//         "id": "6146d5fb2eb39a39da2d7ff5"
-//       },
-//       {
-//         "catname": "Cosmetics",
-//         "id": "6146d6372eb39a39da2d7ff8"
-//       },
-//       {
-//         "catname": "Wearable",
-//         "id": "6146d6562eb39a39da2d7ffb"
-//       },
-//       {
-//         "catname": "Perfumes",
-//         "id": "6146d6602eb39a39da2d7ffe"
-//       },
-//       {
-//         "catname": "Swimsuit",
-//         "id": "6146d6762eb39a39da2d8001"
-//       }
-//     ]
-//   }
-//}

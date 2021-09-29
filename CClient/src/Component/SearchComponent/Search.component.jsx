@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "./search.styles.css";
-import SearchTrigger from "../../redux/product/product.reducer";
 import { useDispatch } from "react-redux";
 
 function Search() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [tag, setTag] = useState("");
   const handleChange = (e) => {
     setTag(e.target.value);
@@ -14,6 +14,7 @@ function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: "TRIGGER_SEARCH", payload: tag });
+    history.push("/shop/search");
   };
 
   return (
@@ -24,9 +25,6 @@ function Search() {
         onChange={handleChange}
         value={tag}
       />
-      <div className="close" style={{ display: "none" }}>
-        X
-      </div>
     </form>
   );
 }

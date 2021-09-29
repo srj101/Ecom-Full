@@ -1,3 +1,14 @@
-const SearchTrigger = (state) => ({ type: "TRIGGER_SEARCH", paylod: state });
+export const SearchTrigger = (state) => ({
+  type: "TRIGGER_SEARCH",
+  payload: state.tag,
+});
 
-export default SearchTrigger;
+export const CatTrigger = (state) => ({
+  type: "CAT_TRIGGER",
+  payload: state.Cat,
+});
+
+export const colorTrigger = (state) => ({
+  type: "COLOR_TRIGGER",
+  payload: state.Color,
+});

@@ -19,8 +19,6 @@ const startServer = async () => {
 
     const app = express();
 
-    app.use(cookieParser());
-
     var whitelist = [
       "https://studio.apollographql.com",
       "http://localhost:3000",
@@ -38,9 +36,12 @@ const startServer = async () => {
     app.use(cors(corsOptions));
 
     // app.use(
-    //   cors({ origin: "https://studio.apollographql.com", credentials: true })
+    //   cors({
+    //     origin: "https://studio.apollographql.com",
+    //     credentials: true,
+    //   })
     // );
-
+    app.use(cookieParser());
     app.use(async (req, res, next) => {
       const accessToken = req.cookies["access_token"];
       const refreshToken = req.cookies["refresh_token"];

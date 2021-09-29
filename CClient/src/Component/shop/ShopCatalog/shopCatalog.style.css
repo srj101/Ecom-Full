@@ -1,3 +1,9 @@
 img.card-img-top {
   height: 270px;
 }
+p.item-count {
+  text-transform: capitalize;
+  font-style: italic;
+  color: #56575a;
+  font-weight: 500;
+}

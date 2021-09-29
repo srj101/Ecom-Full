@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./shopCatalog.style.css";
-import { Card, Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { Col, Row } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Skeleton } from "antd";
 import { gql, useQuery } from "@apollo/client";
+import ProductInfo from "./ProductInfo/ProductInfo.component";
 const SHOP_PRODUCTS = gql`
   query products($searchProductsInput: SearchInput!) {
     SearchProducts(input: $searchProductsInput) {
@@ -18,10 +19,14 @@ const SHOP_PRODUCTS = gql`
   }
 `;
 function ShopCatelog() {
-  const term = useSelector((state) => state.term);
+  const dispatch = useDispatch();
+  const term = useSelector(({ term }) => term.term);
+  const catt = useSelector(({ term }) => term.cat);
+  const colorr = useSelector(({ term }) => term.color);
   const [Tag, setTag] = useState("");
   const [Color, setColor] = useState("");
   const [Cat, setCat] = useState("");
+  const location = useLocation();
 
   const { loading, error, data } = useQuery(SHOP_PRODUCTS, {
     variables: {
@@ -32,11 +37,17 @@ function ShopCatelog() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setTag(term.state);
-    console.log(term);
+    if (location.pathname === "/shop") {
+      console.log(true);
+      dispatch({ type: "CAT_TRIGGER", payload: "" });
+      dispatch({ type: "COLOR_TRIGGER", payload: "" });
+    }
+    setColor(colorr);
+    setTag(term);
+    setCat(catt);
 
     setProducts(data?.SearchProducts);
-  }, [data, term.state]);
+  }, [data, term, catt, colorr, location]);
 
   if (error) {
     return error.message;
@@ -44,47 +55,31 @@ function ShopCatelog() {
 
   return (
     <div className="shop-catelog">
-      <input
-        type="text"
-        placeholder="Colors"
-        onChange={(e) => setColor(e.target.value)}
-        value={Color}
-      />
-      <input
-        type="text"
-        placeholder="Category"
-        onChange={(e) => setCat(e.target.value)}
-        value={Cat}
-      />
-      <input
-        type="text"
-        placeholder="tag"
-        onChange={(e) => setTag(e.target.value)}
-        value={Tag}
-      />
       {loading ? (
-        "loading...."
+        <Row>
+          {[
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20,
+          ].map((item) => (
+            <Col key={item} lg={4}>
+              <Skeleton />
+            </Col>
+          ))}
+        </Row>
       ) : (
         <Row>
           {products && products.length === 0 ? (
             <div className="danger">No result Found</div>
           ) : (
             <Row>
-              <p>{products && `${products.length} items found`}</p>
+              <p className="item-count">
+                {products && `${products.length} items found`}
+              </p>
               {products &&
                 products.map(({ image, name, id, desc }) => {
                   return (
                     <Col key={id} lg={4}>
-                      <Card style={{ width: "18rem" }}>
-                        <Card.Img variant="top" src={image[0]} alt={name} />
-                        <Card.Body>
-                          <Card.Title>{name}</Card.Title>
-                          <Card.Text>
-                            {desc[0].text.substring(0, 45)}...
-                          </Card.Text>
-                          <Link to={`/product/${id}`}>ADD TO CART</Link>
-                        </Card.Body>
-                      </Card>
+                      <ProductInfo info={{ image, id, name, desc }} />
                     </Col>
                   );
                 })}

@@ -32,21 +32,35 @@ const FullMenu = () => {
         </div>
         <div className="menu__list">
           <div className="menu__item">
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+              Home
+            </Link>
           </div>
           <div className="menu__item">
-            <Link to="/shop">Shop</Link>
+            <Link to="/shop" onClick={() => setIsMenuOpen(false)}>
+              Shop
+            </Link>
           </div>
           <div className="menu__item" onClick={showSub}>
-            <Link to="/">Pages</Link>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+              Pages
+            </Link>
             <div className="sub_menu__item menu__item">
-              <Link to="/about">About Us</Link>
-              <Link to="/faq">FAQ</Link>
-              <Link to="/contact">Contact Us</Link>
+              <Link to="/about" onClick={() => setIsMenuOpen(false)}>
+                About Us
+              </Link>
+              <Link to="/faq" onClick={() => setIsMenuOpen(false)}>
+                FAQ
+              </Link>
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                Contact Us
+              </Link>
             </div>
           </div>
           <div className="menu__item">
-            <Link to="/blog">Blog</Link>
+            <Link to="/blog" onClick={() => setIsMenuOpen(false)}>
+              Blog
+            </Link>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 }
 .breadcrumb {
   background: url("http://lezada.reactdemo.hasthemes.com/assets/images/backgrounds/breadcrumb-bg-1.png");
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   height: 230px;
   display: flex;
@@ -11,7 +11,6 @@
   align-items: center;
   flex-direction: column;
 }
-
 .bread-lins a {
   color: #222;
   padding: 0px 4px;

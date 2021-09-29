@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./footer.css";
 import { Row, Col, Container } from "react-bootstrap";
+import { BackTop } from "antd";
 
 function FooterCompo() {
   return (
@@ -39,6 +40,7 @@ function FooterCompo() {
             </div>
           </Col>
         </Row>
+        <BackTop />
       </Container>
     </div>
   );

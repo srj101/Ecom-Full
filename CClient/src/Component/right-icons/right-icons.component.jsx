@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./right-icons.style.css";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import Drawers from "../Drawers/Drawers.component";
 import Search from "../SearchComponent/Search.component";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const RightIcons = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const subofShop = document.querySelector(".sub_menu__item");
+  const term = useSelector(({ term }) => term.term);
 
   const handleClick = (e) => {
     setIsMenuOpen(true);
@@ -18,8 +18,11 @@ const RightIcons = () => {
   const closemenu = (e) => {
     setIsMenuOpen(false);
   };
-
-
+  let { pathname } = useLocation();
+  const closeButton = useRef(null);
+  useEffect(() => {
+    closeButton.current.click();
+  }, [pathname, term]);
 
   const wishlist = {
     products: [
@@ -89,7 +92,7 @@ const RightIcons = () => {
           }
         >
           <Search />
-          <div className="menu-close" onClick={closemenu}>
+          <div className="menu-close" onClick={closemenu} ref={closeButton}>
             <span>X</span>
           </div>
         </div>

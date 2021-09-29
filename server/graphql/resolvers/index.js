@@ -11,7 +11,7 @@ const resolvers = {
     categories: async () => await Category.find(),
     products: async () => await Product.find(),
     reviews: async () => await Review.find(),
-    productByID: async (_, { id }) => await Product.findById({ id }),
+    productByID: async (_, { id }) => await Product.findById({ _id: id }),
     SearchProducts: async (_, { input }) => {
       try {
         let Products;
