@@ -1,0 +1,45 @@
+.catsection a,
+.colorsection a {
+  text-decoration: none;
+  color: #222;
+  text-transform: uppercase;
+}
+.catsection a:hover,
+.colorsection a:hover {
+  color: black;
+}
+.sec-title > a {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sec-title > a:hover {
+  color: #222;
+}
+.sec-title:hover > a {
+  color: #222;
+}
+.sec-title:hover {
+  background: #fff;
+  border-right: 1px solid #222;
+}
+.sec-title {
+  background: #222;
+  padding: 13px 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #fff;
+}
+.sec-title > a span {
+  margin-right: 8px;
+  font-size: 20px;
+}
+.shopleftnav > div ul {
+  border-left: 1px solid #222;
+}
+.catsection {
+  margin-bottom: 25px;
+  border-bottom: 1px solid #ccc;
+}

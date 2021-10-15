@@ -9,19 +9,27 @@ const userSchema = new mongoose.Schema(
     nickname: String,
     phone: String,
     address: String,
+    country: String,
+    city: String,
+    customer_id: String,
     email: {
       type: String,
       require: true,
+      unique: true,
     },
     password: {
       type: String,
       require: true,
     },
     profilepic: String,
-    orders: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+    orders: [],
     count: {
       type: Number,
       default: 0,
+    },
+    confirm: {
+      type: Boolean,
+      default: false,
     },
   },
   {

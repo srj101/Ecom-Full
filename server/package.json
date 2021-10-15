@@ -19,8 +19,11 @@
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "graphql": "^15.5.3",
+    "graphql": "^15.6.1",
+    "graphql-date": "^1.0.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.5"
+    "mongoose": "^6.0.5",
+    "nodemailer": "^6.7.0",
+    "stripe": "^8.181.0"
   }
 }

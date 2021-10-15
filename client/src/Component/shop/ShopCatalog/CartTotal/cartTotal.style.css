@@ -1,0 +1,25 @@
+.carTotal {
+  background: #2c2b2b;
+  color: #fff;
+  padding: 30px;
+}
+
+.carTotal h1,
+.carTotal h5 {
+  font-size: 14px;
+  color: #fff;
+}
+.carTotal .buy-now {
+  background: #fff;
+  color: #000;
+  border: 0px solid;
+  padding: 6px 10px;
+  margin: 10px 0;
+  transition: 0.3s ease-out;
+  text-decoration: none;
+}
+
+.carTotal .buy-now:hover {
+  background: #000;
+  color: #ffff;
+}

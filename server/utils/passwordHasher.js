@@ -1,21 +1,14 @@
 import bcrypt from "bcrypt";
 export const hashPassword = async (user) => {
   const password = user.password;
-  const saltRounds = 10;
+  const saltRounds = 12;
 
-  const hashedPassword = bcrypt.hash(
-    password,
-    saltRounds,
-    function (err, hash) {
-      if (err) {
-        return err;
-      }
-
-      return hash;
-    }
-  );
-
-  return hashedPassword;
+  try {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const checkHashpass = async (inputPass, RealuserPass) =>

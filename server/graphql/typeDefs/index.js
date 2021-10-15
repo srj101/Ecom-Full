@@ -1,17 +1,21 @@
 import { gql } from "apollo-server";
 const typeDefs = gql`
+  scalar Date
+
   type User {
     id: ID!
     firstname: String!
     lastname: String
     password: String!
     email: String!
-    nickname: String!
+    nickname: String
+    country: String
+    city: String
     phone: String!
     address: String!
     profilepic: String
     count: Int
-    orders: [Product]
+    orders: [OrderProduct]
   }
 
   type Category {
@@ -54,6 +58,45 @@ const typeDefs = gql`
     tags: [tagsType]
     reviews: [Review]
     related_products: [Product]
+  }
+
+  type OrderProduct {
+    id: ID
+    price: Float
+    SKU: String
+    name: String
+    stock: Int
+    categoryid: String
+    catName: String
+    desc: [descType]
+    image: [String]
+    colors: [colorType]
+    tags: [tagsType]
+    quantity: Int
+    createdAt: Date
+    updatedAt: Date
+  }
+
+  type shippingType {
+    address: String
+    country: String
+    city: String
+    email: String
+  }
+
+  type Order {
+    id: ID
+    products: [OrderProduct]
+    total: Int
+    status: String
+    tracking_number: String
+    userId: String
+    receipt_email: String
+    description: String
+    shipping: shippingType
+    createdAt: Date
+    updatedAt: Date
+    client_secret: String
   }
 
   type Review {
@@ -112,15 +155,53 @@ const typeDefs = gql`
     lastname: String
     email: String!
     password: String!
-    nickname: String!
-    phone: String!
-    address: String!
+    country: String
+    city: String
+    nickname: String
+    phone: String
+    address: String
+    profilepic: String
+  }
+
+  input updateUser {
+    firstname: String
+    lastname: String
+    country: String
+    city: String
+    phone: String
+    address: String
+    profilepic: String
+    nickname: String
   }
 
   input SearchInput {
     colorName: String
     tag: String
     catName: String
+    lth: Boolean
+  }
+
+  input orderedProduct {
+    id: ID
+    name: String
+    offerPrice: Float
+    SKU: String
+    stock: Int
+    new: Boolean
+    best_seller: Boolean
+    price: Float
+    categoryid: String
+    catName: String
+    desc: [descTypeIn]
+    image: [String]
+    colors: [colorTypeIn]
+    tags: [tagsIn]
+    quantity: Int
+  }
+
+  input OrderInput {
+    products: [orderedProduct]
+    total: Int
   }
 
   type Query {
@@ -131,6 +212,7 @@ const typeDefs = gql`
     newArivals: [Product]
     userProfile: User
     SearchProducts(input: SearchInput!): [Product]
+    getOrders: [Order]
   }
 
   type Mutation {
@@ -139,8 +221,10 @@ const typeDefs = gql`
     createCategories(catname: String!, catimage: String!): Category
     registration(input: userinput!): String
     login(email: String!, password: String!): String
+    upDateProfile(input: updateUser): User
     invalidateTokens: Boolean!
     deleteProduct(id: String!): String
+    addToOrder(input: OrderInput!): Order
   }
 `;
 

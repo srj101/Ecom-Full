@@ -15,11 +15,15 @@ const url =
 const startServer = async () => {
   try {
     const cmongo = await mongoose.connect(url);
-    console.log("database sucsessfully connected");
+    if (cmongo) {
+      console.log("database sucsessfully connected");
+    }
 
     const app = express();
+    app.use(express.static("public"));
 
     var whitelist = [
+      "http://localhost:4000/graphql",
       "https://studio.apollographql.com",
       "http://localhost:3000",
     ];
@@ -33,15 +37,18 @@ const startServer = async () => {
       },
       credentials: true,
     };
+
     app.use(cors(corsOptions));
 
     // app.use(
     //   cors({
-    //     origin: "https://studio.apollographql.com",
+    //     origin: "http://localhost:4000/graphql",
     //     credentials: true,
     //   })
     // );
+
     app.use(cookieParser());
+
     app.use(async (req, res, next) => {
       const accessToken = req.cookies["access_token"];
       const refreshToken = req.cookies["refresh_token"];
@@ -93,6 +100,11 @@ const startServer = async () => {
     const server = new ApolloServer({
       typeDefs,
       resolvers,
+      playground: {
+        settings: {
+          "editor.theme": "dark",
+        },
+      },
       context: ({ req, res }) => ({ req, res }),
     });
 

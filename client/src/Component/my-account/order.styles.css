@@ -1,0 +1,46 @@
+.order-product img {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.order-product {
+  display: flex;
+  justify-content: stretch;
+  margin: 25px 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  align-items: center;
+}
+
+.oproduct-content span {
+  display: block;
+  font-weight: 700;
+}
+.order-container {
+  margin: 30px 0;
+  border-bottom: 2px solid #222;
+  padding-bottom: 15px;
+}
+.order-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+}
+.order-meta p em,
+.order__date {
+  font-weight: 500;
+}
+.payment-section {
+  margin: 100px 0;
+}
+.form-row {
+  min-width: 150px !important;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 50px 0;
+}
+form.form-row div:first-child {
+  flex-basis: 30%;
+}
