@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 const MyAccount = () => {
   const userLoginStatus = useSelector((state) => state.user.loggedinStatus);
+
   const history = useHistory();
   if (!userLoginStatus) {
     history.push("/login");

@@ -19,6 +19,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectCartItemTotal } from "./redux/cart/cart.selector";
+import ConfirmEmail from "./pages/ConfirmEmail.component";
+import Resetpassword from "./pages/RegisterLogin/reset-password.component";
 
 function App({ total }) {
   return (
@@ -30,6 +32,15 @@ function App({ total }) {
             <NewArivals />
             <HomeContents />
           </Route>
+
+          <Route path="/confirmEmail/:token">
+            <ConfirmEmail />
+          </Route>
+
+          <Route path="/reset-password/:token/:email" exact>
+            <Resetpassword />
+          </Route>
+
           <Route exact path="/logout">
             <Logout />
           </Route>

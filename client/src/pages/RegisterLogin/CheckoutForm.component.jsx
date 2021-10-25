@@ -1,13 +1,11 @@
-import React from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
 import { UserAddOutlined } from "@ant-design/icons";
-import { message } from "antd";
-import { useHistory } from "react-router";
-import { Form, Input, Select, Checkbox, Button } from "antd";
-import { Row, Col } from "react-bootstrap";
-import { Tabs } from "antd";
+import { useMutation } from "@apollo/client";
+import { Button, Checkbox, Form, Input, message, Select, Tabs } from "antd";
+import gql from "graphql-tag";
+import React from "react";
+import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { userLoginAction } from "../../redux/myAccount/myaccount.action";
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -106,6 +104,7 @@ function CheckoutForm() {
       </Select>
     </Form.Item>
   );
+
   return (
     <div className="registration-formm">
       <Form
@@ -126,8 +125,7 @@ function CheckoutForm() {
                   ? message.loading("Registering, Please give us a moment...")
                   : data && data?.registration
                   ? (message.success("successfully registered"),
-                    dispatch(userLoginAction()),
-                    history.push("payment-method"))
+                    dispatch(userLoginAction()))
                   : error && message.error(error.message)}
               </p>
             </div>
@@ -228,9 +226,9 @@ function CheckoutForm() {
                     },
                     {
                       pattern: new RegExp(
-                        "^(?=(.*[a-zA-Z]){1,})(?=(.*[0-9]){2,}).{6,}$"
+                        "^(?=(.*[a-zA-Z]){1,})(?=(.*[0-9]){1,}).{6,}$"
                       ),
-                      message: `Password is too easy! Use at least 2 numericals`,
+                      message: `Password is too easy! Use at least 1 numericals`,
                     },
                   ]}
                   hasFeedback

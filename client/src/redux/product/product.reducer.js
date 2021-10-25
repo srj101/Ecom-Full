@@ -30,6 +30,11 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         products: action.payload,
       };
+    case "SET_LENGTH":
+      return {
+        ...state,
+        length: action.payload,
+      };
     default:
       return state;
   }

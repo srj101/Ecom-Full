@@ -7,17 +7,17 @@ import { Row, Col, Container } from "react-bootstrap";
 import { notification } from "antd";
 import { Affix } from "antd";
 const Header = () => {
-  useEffect(() => {
-    notification.open({
-      message: "Hi",
-      description: "Welcome To Ecom!",
-      className: "custom-class",
-      style: {
-        width: 300,
-      },
-      placement: "topRight",
-    });
-  }, []);
+  // useEffect(() => {
+  //   notification.open({
+  //     message: "Hi",
+  //     description: "Welcome To Ecom!",
+  //     className: "custom-class",
+  //     style: {
+  //       width: 300,
+  //     },
+  //     placement: "topRight",
+  //   });
+  // }, []);
   const [top, setTop] = useState();
   return (
     <Affix offsetTop={top}>

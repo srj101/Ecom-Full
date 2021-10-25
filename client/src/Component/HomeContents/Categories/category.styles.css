@@ -1,3 +1,47 @@
+.category-ad.item-one {
+  background: linear-gradient(0deg, rgb(108 7 7 / 30%), rgb(0 0 0 / 60%)),
+    url(https://unsplash.com/photos/3_JwPJwq6CI/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8NjB8fHNwb3J0c3xlbnwwfHx8fDE2MzQ0NTUyMzg&force=true&w=640);
+}
+
+.category-ad.item-two {
+  background: linear-gradient(0deg, rgb(0 0 0 / 30%), rgb(55 70 242 / 60%)),
+    url(https://unsplash.com/photos/1XvjS1fCrms/download?force=true&w=640);
+}
+
 .category-show {
-  padding: 50px 0;
+  padding: 30px 0;
+}
+
+.category-ad {
+  padding: 100px 30px;
+  text-transform: uppercase;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 335px;
+}
+
+.category-ad h5 {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.category-ad h2 {
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+.category-ad a {
+  color: #222;
+  text-decoration: none;
+  background: #fff;
+  padding: 10px 20px;
+  border-radius: 43px;
+  font-size: 13px;
+}
+.category-ad a:hover {
+  background: #000;
+  color: #fff;
 }

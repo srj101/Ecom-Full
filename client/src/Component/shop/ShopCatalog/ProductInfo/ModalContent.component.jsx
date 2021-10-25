@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 
 function ModalContent(props) {
   const { data } = props;
+  console.log(data);
   return (
     <Row>
       <Col lg={6}>

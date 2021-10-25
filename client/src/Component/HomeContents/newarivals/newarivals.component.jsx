@@ -82,9 +82,13 @@ const NewArivals = () => {
               <div key={image[1]} className="single-item-home">
                 <img src={image[1]} alt={image[1]} />
                 <div className="slider-content">
-                  <h1 class="title">
-                    Feeling relax day, <br /> Enjoy weekend
-                  </h1>
+                  <div className="text-content">
+                    <h1 class="title">
+                      Feeling relax day, <br /> Enjoy weekend
+                    </h1>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                  </div>
+
                   <Link to={`/shop/`} className="shop-now">
                     Shop Now!
                   </Link>

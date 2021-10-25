@@ -1,0 +1,100 @@
+.ad-banner-wrapper {
+  background: linear-gradient(0deg, rgb(0 248 180 / 30%), rgb(0 0 0 / 30%)),
+    url(https://unsplash.com/photos/ZDOHjEfccyA/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM0NTU5MTAz&force=true&w=1920);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 70px 0;
+  color: #fff;
+  background-position: center center;
+  text-transform: uppercase;
+  margin: 50px 0;
+}
+
+.ad-banner-wrapper h5,
+.ad-banner-wrapper h2 {
+  color: #fff;
+}
+
+.ad-banner-wrapper h5 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ad-banner-wrapper h2 {
+  font-size: 25px;
+  margin: 10px 0;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.ad-banner-wrapper p {
+  font-size: 12px;
+  text-transform: none;
+  margin-bottom: 40px;
+}
+
+.ad-banner-wrapper a {
+  color: #222;
+  text-decoration: none;
+  background: #fff;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+.ad-banner-wrapper a:hover {
+  background: #222;
+  color: #fff;
+}
+.newsletter-wrapper {
+  margin: 100px 0;
+  text-transform: uppercase;
+}
+
+.newsletter-wrapper input[type="text"] {
+  border: 1px solid #222;
+  font-size: 18px;
+  border-radius: 40px 0 0 40px;
+  padding: 0 20px;
+  margin: 0 0;
+  line-height: 50px;
+}
+.newsletter-wrapper button[type="submit"]:hover {
+  background: #9e9a9a;
+}
+.newsletter-wrapper button[type="submit"] {
+  border: 0px;
+  background: #222;
+  color: #fff;
+  padding: 14px 15px;
+  margin-left: -22px;
+  border-radius: 0 40px 40px 0px;
+  font-size: 16px;
+  text-transform: capitalize;
+  transition: 0.3s;
+}
+
+.newsletter-wrapper form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newsletter-wrapper p {
+  margin-bottom: 30px;
+}
+.payment__priceContainer button {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  padding: 10px 23px;
+  margin: 20px 0;
+  transition: 0.3s;
+  border: 1px solid #222;
+  cursor: pointer;
+}
+.payment__priceContainer button:hover {
+  background: #fff;
+  color: #222;
+}

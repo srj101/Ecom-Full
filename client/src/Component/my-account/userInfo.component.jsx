@@ -54,7 +54,6 @@ function UserInfo() {
       setUploadState(false);
     }
   };
-  const userInfoo = useSelector((state) => state.user.userInfo);
   useEffect(() => {
     if (data) {
       setUserInfo(data.upDateProfile);
@@ -67,7 +66,7 @@ function UserInfo() {
       userInfo,
     });
   }, [userInfo, userLoginStatus]);
-
+  const userInfoo = useSelector((state) => state.user.userInfo);
   if (error) {
     return (
       <div className="error-message">
@@ -75,6 +74,7 @@ function UserInfo() {
       </div>
     );
   }
+
   return (
     <div className="text-center userinfo">
       <Dropzone onDrop={onDropp}>

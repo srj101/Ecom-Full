@@ -23,7 +23,6 @@ const startServer = async () => {
     app.use(express.static("public"));
 
     var whitelist = [
-      "http://localhost:4000/graphql",
       "https://studio.apollographql.com",
       "http://localhost:3000",
     ];

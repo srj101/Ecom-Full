@@ -8,6 +8,9 @@ import { checkHashpass, hashPassword } from "../../utils/passwordHasher.js";
 import Stripe from "stripe";
 import { GraphQLScalarType, Kind } from "graphql";
 import nodemailer from "nodemailer";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
 const dateScalar = new GraphQLScalarType({
   name: "Date",
   description: "Date custom scalar type",
@@ -33,13 +36,17 @@ const resolvers = {
   Date: dateScalar,
   Query: {
     categories: async () => await Category.find(),
-    products: async () => await Product.find(),
+    products: async () => await Product.find().limit(8),
     reviews: async () => await Review.find(),
     productByID: async (_, { id }) => await Product.findById({ _id: id }),
     SearchProducts: async (_, { input }) => {
       try {
         let Products;
         const { tag, colorName, catName, lth } = input;
+        let { skip } = input;
+        if (!skip) {
+          skip = 0;
+        }
         if (lth) {
           if (catName && colorName && tag) {
             Products = await Product.find({
@@ -59,7 +66,10 @@ const resolvers = {
                   catName: new RegExp(catName, "i"),
                 },
               ],
-            }).sort({ price: 1 });
+            })
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           } else if (tag && !colorName && !catName) {
             Products = await Product.find({
               $or: [
@@ -68,15 +78,24 @@ const resolvers = {
                 },
                 { name: new RegExp(tag, "i") },
               ],
-            }).sort({ price: 1 });
+            })
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           } else if (colorName && !tag && !catName) {
             Products = await Product.find({
               colors: { $elemMatch: { colorName: new RegExp(colorName, "i") } },
-            }).sort({ price: 1 });
+            })
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           } else if (catName && !tag && !colorName) {
             Products = await Product.find({
               catName: new RegExp(catName, "i"),
-            }).sort({ price: 1 });
+            })
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           } else if (catName && tag && !colorName) {
             Products = await Product.find({
               $or: [
@@ -89,12 +108,18 @@ const resolvers = {
                   catName: new RegExp(catName, "i"),
                 },
               ],
-            }).sort({ price: 1 });
+            })
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           } else if (catName && colorName && !tag) {
             Products = await Product.find({
               catName: new RegExp(catName, "i"),
               colors: { $elemMatch: { colorName: new RegExp(colorName, "i") } },
-            }).sort({ price: 1 });
+            })
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           } else if (tag && colorName && !catName) {
             Products = await Product.find({
               $or: [
@@ -107,9 +132,15 @@ const resolvers = {
                   colors: { colorName: new RegExp(colorName, "i") },
                 },
               ],
-            }).sort({ price: 1 });
+            })
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           } else {
-            Products = await Product.find({}).sort({ price: 1 });
+            Products = await Product.find({})
+              .sort({ price: 1 })
+              .limit(16)
+              .skip(skip);
           }
         } else {
           if (catName && colorName && tag) {
@@ -130,7 +161,10 @@ const resolvers = {
                   catName: new RegExp(catName, "i"),
                 },
               ],
-            }).sort({ price: -1 });
+            })
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           } else if (tag && !colorName && !catName) {
             Products = await Product.find({
               $or: [
@@ -139,15 +173,24 @@ const resolvers = {
                 },
                 { name: new RegExp(tag, "i") },
               ],
-            }).sort({ price: -1 });
+            })
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           } else if (colorName && !tag && !catName) {
             Products = await Product.find({
               colors: { $elemMatch: { colorName: new RegExp(colorName, "i") } },
-            }).sort({ price: -1 });
+            })
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           } else if (catName && !tag && !colorName) {
             Products = await Product.find({
               catName: new RegExp(catName, "i"),
-            }).sort({ price: -1 });
+            })
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           } else if (catName && tag && !colorName) {
             Products = await Product.find({
               $or: [
@@ -160,12 +203,18 @@ const resolvers = {
                   catName: new RegExp(catName, "i"),
                 },
               ],
-            }).sort({ price: -1 });
+            })
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           } else if (catName && colorName && !tag) {
             Products = await Product.find({
               catName: new RegExp(catName, "i"),
               colors: { $elemMatch: { colorName: new RegExp(colorName, "i") } },
-            }).sort({ price: -1 });
+            })
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           } else if (tag && colorName && !catName) {
             Products = await Product.find({
               $or: [
@@ -178,9 +227,15 @@ const resolvers = {
                   colors: { colorName: new RegExp(colorName, "i") },
                 },
               ],
-            }).sort({ price: -1 });
+            })
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           } else {
-            Products = await Product.find({}).sort({ price: -1 });
+            Products = await Product.find({})
+              .sort({ price: -1 })
+              .limit(16)
+              .skip(skip);
           }
         }
 
@@ -285,6 +340,9 @@ const resolvers = {
           throw new Error("You have an account, Just login!");
         }
 
+        const link = jwt.sign({ confirm: false }, "OUR_SECRET", {
+          expiresIn: "1d",
+        });
         const passwordd = await hashPassword(input);
         const addUser = new User({ ...input, password: passwordd });
         await addUser.save();
@@ -301,6 +359,32 @@ const resolvers = {
             secure: true,
             sameSite: "None",
           });
+
+          // Send confirmation Email
+
+          // create reusable transporter object using the default SMTP transport
+          let transporter = nodemailer.createTransport({
+            service: "Gmail", // true for 465, false for other ports
+            auth: {
+              user: "salim15-3117@diu.edu.bd", // generated ethereal user
+              pass: "Salimkhan1@", // generated ethereal password
+            },
+          });
+
+          // send mail with defined transport object
+          let info = await transporter.sendMail({
+            from: '"ShoppingKORBO 👻" <salim15-3117@diu.edu.bd>', // sender address
+            to: `<${input.email}>`, // list of receivers
+            subject: `Hello ${input.firstname} ✔ from ShoppingKorbo`, // Subject line
+            text: "Thanks for shopping in ShoppingKorbo!", // plain text body
+            html: `<div><h2>Hope you are doing great sir.</h2><p>Please confirm your email</p>
+            
+                <a href="http://localhost:3000/confirmEmail/${link}">Please Click this link to confirm your email</a>
+    
+                
+            </div>`, // html body
+          });
+
           return true;
         }
         return false;
@@ -377,6 +461,22 @@ const resolvers = {
       }
     },
 
+    confirmEmail: async (_, { token }, { req }) => {
+      if (!req.userId) {
+        throw new Error("You must Login!");
+      }
+
+      const verified = jwt.verify(token, "OUR_SECRET");
+      const user = await User.findOneAndUpdate(
+        { _id: req.userId },
+        { confirm: true }
+      );
+
+      console.log(verified);
+
+      return "Confirmed!";
+    },
+
     addToOrder: async (_, { input }, { req }) => {
       if (!req.userId) {
         throw new Error("You must Login!");
@@ -426,10 +526,6 @@ const resolvers = {
       });
 
       await orders.save();
-
-      // Confirmation Email
-
-      let testAccount = await nodemailer.createTestAccount();
 
       // create reusable transporter object using the default SMTP transport
       let transporter = nodemailer.createTransport({
@@ -493,6 +589,76 @@ const resolvers = {
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
       return { ...orders, client_secret: customer.id };
+    },
+
+    forgotPassword: async (_, input) => {
+      const checkExists = await User.findOne({ email: input.email });
+      if (!checkExists) {
+        throw new Error("User Not in Our System");
+      }
+
+      const { email } = input;
+
+      const token = jwt.sign(
+        { count: checkExists.count, email: input.email },
+        "top_sttt",
+        {
+          expiresIn: "1d",
+        }
+      );
+
+      // create reusable transporter object using the default SMTP transport
+      let transporter = nodemailer.createTransport({
+        service: "Gmail", // true for 465, false for other ports
+        auth: {
+          user: "salim15-3117@diu.edu.bd", // generated ethereal user
+          pass: "Salimkhan1@", // generated ethereal password
+        },
+      });
+
+      // send mail with defined transport object
+      let info = await transporter.sendMail({
+        from: '"ShoppingKORBO 👻" <salim15-3117@diu.edu.bd>', // sender address
+        to: `<${email}>`, // list of receivers
+        subject: `Password Reset Link ✔ from ShoppingKorbo`, // Subject line
+        text: "Thanks for shopping in ShoppingKorbo!", // plain text body
+        html: `<div><h2>Hope you are doing great sir.</h2>
+        
+            <h3>Your password Reset Link</h3>
+            <br />
+            
+            <a href="http://localhost:3000/reset-password/${token}/${input.email}">Click here to reset your password</a>
+            <hr />
+            <br />
+
+            <p>This link is one time and valid for one day!</p>
+           
+        </div>`, // html body
+      });
+
+      console.log("Message sent: %s", info.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+      return true;
+    },
+
+    resetPasword: async (_, input) => {
+      const { token, password } = input;
+      const checkJWT = jwt.verify(token, "top_sttt");
+
+      if (!checkJWT) {
+        throw new Error("Invalid Token!");
+      }
+      const passwordd = await bcrypt.hash(password, 12);
+      const user = await User.findOne({ email: input.email });
+      const changePassword = await User.findOneAndUpdate(
+        { email: input.email },
+        { password: passwordd, count: user.count + 1, confirm: true }
+      );
+      return true;
     },
   },
 };

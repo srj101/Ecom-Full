@@ -12,9 +12,14 @@ const SHOP_PRODUCTS = gql`
       id
       name
       price
+      stock
+      offerPrice
       image
       desc {
         text
+        weight
+        Dimensions
+        otherInfo
       }
     }
   }
@@ -92,6 +97,14 @@ function ShopCatelog() {
               ))}
             </>
           )}
+
+          <div className="pagination">
+            {Array(10)
+              .fill(1)
+              .map((el, i) => (
+                <div>{i}</div>
+              ))}
+          </div>
         </Row>
       )}
     </div>

@@ -1,7 +1,8 @@
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, message } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Alert, Col, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import "./myaccount.style.css";
 
@@ -36,6 +37,7 @@ const UPDATE_USER = gql`
       city
       phone
       address
+      confirm
       email
       id
       orders {
@@ -55,6 +57,7 @@ const USER_INFO = gql`
       country
       city
       phone
+      confirm
       address
       email
       id
@@ -67,31 +70,34 @@ const USER_INFO = gql`
 
 function UpdateProfileSec() {
   const client = useApolloClient();
-  const [uploadState, setUploadState] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
+
   const [updateUser, updatedUser] = useMutation(UPDATE_USER, {
     errorPolicy: "all",
   });
 
-  const { loading, error, data } = useQuery(USER_INFO);
-  const [userInfo, setUserInfo] = useState({});
-
+  const { loading, error, data } = useQuery(USER_INFO, {
+    errorPolicy: "all",
+  });
+  const [userInfo, setUserInfo] = useState();
+  const confirmState = userInfo?.confirm;
   useEffect(() => {
     if (data) {
       setUserInfo(data.userProfile);
+      dispatch({
+        type: "USER_LOGGEDIN",
+        userInfo: data.userProfile,
+      });
     }
     if (updateUser.data) {
       setUserInfo(updateUser.data.upDateProfile);
+      dispatch({
+        type: "USER_LOGGEDIN",
+        userInfo: updateUser.data.upDateProfile,
+      });
     }
-  }, [data, userInfo]);
-
-  useEffect(() => {
-    dispatch({
-      type: "USER_LOGGEDIN",
-      userInfo,
-    });
-  }, [userInfo]);
+  }, [data, confirmState]);
 
   const onFinish = (values) => {
     const { phone, firstname, lastname, address, nickname, country, city } =
@@ -114,81 +120,117 @@ function UpdateProfileSec() {
   if (loading & !data) {
     return "loading....";
   }
-  return (
-    <Form
-      {...layout}
-      name="nest-messages"
-      onFinish={onFinish}
-      validateMessages={validateMessages}
-    >
-      <p>{data && message.success("Saved!")}</p>
-      <Form.Item
-        name="firstname"
-        label="FirstName"
-        tooltip="What is your First Name"
-        rules={[
-          {
-            message: "Please input your First Name!",
-            whitespace: true,
-          },
-        ]}
+
+  if (!confirmState) {
+    return (
+      <div className="registration-formm">
+        <Row>
+          <Col>
+            <Alert variant="warning">
+              Please confirm your email to procced!
+            </Alert>
+
+            <Button
+              type="ghost"
+              className="logoutbtn"
+              onClick={(e) => {
+                e.preventDefault();
+                client.clearStore();
+                dispatch({
+                  type: "USER_LOGGEDOUT",
+                  payload: { userInfo },
+                });
+
+                history.push("/login");
+              }}
+            >
+              Logout
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
+  } else {
+    return (
+      <Form
+        {...layout}
+        name="nest-messages"
+        onFinish={onFinish}
+        validateMessages={validateMessages}
       >
-        <Input placeholder={userInfo && userInfo.firstname} />
-      </Form.Item>
-      <Form.Item
-        name="lastname"
-        label="LastName"
-        tooltip="What is your Last Name"
-        rules={[
-          {
-            message: "Please input your Last Name!",
-            whitespace: true,
-          },
-        ]}
-      >
-        <Input placeholder={userInfo && userInfo.lastname} />
-      </Form.Item>
-
-      <Form.Item name={["nickname"]} label="Nick Name">
-        <Input placeholder={userInfo && userInfo.nickname} />
-      </Form.Item>
-      <Form.Item name={["country"]} label="Country">
-        <Input placeholder={userInfo && userInfo.country} />
-      </Form.Item>
-      <Form.Item name={["city"]} label="City">
-        <Input placeholder={userInfo && userInfo.city} />
-      </Form.Item>
-      <Form.Item name={["address"]} label="Address">
-        <Input placeholder={userInfo && userInfo.address} />
-      </Form.Item>
-
-      <Form.Item name={["phone"]} label="Phone">
-        <Input placeholder={userInfo && userInfo.phone} />
-      </Form.Item>
-
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        <Button type="primary" htmlType="submit" loading={updatedUser.loading}>
-          Save
-        </Button>
-        <Button
-          type="ghost"
-          className="logoutbtn"
-          onClick={(e) => {
-            e.preventDefault();
-            client.clearStore();
-            dispatch({
-              type: "USER_LOGGEDOUT",
-              payload: { userInfo },
-            });
-
-            history.push("/login");
-          }}
+        <p>{data && message.success("Saved!")}</p>
+        <Form.Item
+          name="firstname"
+          label="FirstName"
+          tooltip="What is your First Name"
+          rules={[
+            {
+              message: "Please input your First Name!",
+              whitespace: true,
+            },
+          ]}
         >
-          Logout
-        </Button>
-      </Form.Item>
-    </Form>
-  );
+          <Input placeholder={userInfo && userInfo.firstname} />
+        </Form.Item>
+        <Form.Item
+          name="lastname"
+          label="LastName"
+          tooltip="What is your Last Name"
+          rules={[
+            {
+              message: "Please input your Last Name!",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input placeholder={userInfo && userInfo.lastname} />
+        </Form.Item>
+
+        <Form.Item name={["nickname"]} label="Nick Name">
+          <Input placeholder={userInfo && userInfo.nickname} />
+        </Form.Item>
+        <Form.Item name={["country"]} label="Country">
+          <Input placeholder={userInfo && userInfo.country} />
+        </Form.Item>
+        <Form.Item name={["city"]} label="City">
+          <Input placeholder={userInfo && userInfo.city} />
+        </Form.Item>
+        <Form.Item name={["address"]} label="Address">
+          <Input placeholder={userInfo && userInfo.address} />
+        </Form.Item>
+
+        <Form.Item name={["phone"]} label="Phone">
+          <Input placeholder={userInfo && userInfo.phone} />
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={updatedUser.loading}
+          >
+            Save
+          </Button>
+          <Button
+            type="ghost"
+            className="logoutbtn"
+            onClick={(e) => {
+              e.preventDefault();
+              client.clearStore();
+              dispatch({
+                type: "USER_LOGGEDOUT",
+                payload: { userInfo },
+              });
+
+              history.push("/login");
+            }}
+          >
+            Logout
+          </Button>
+        </Form.Item>
+      </Form>
+    );
+  }
 }
 
 export default UpdateProfileSec;

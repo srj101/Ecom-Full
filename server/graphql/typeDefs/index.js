@@ -16,6 +16,7 @@ const typeDefs = gql`
     profilepic: String
     count: Int
     orders: [OrderProduct]
+    confirm: Boolean
   }
 
   type Category {
@@ -58,6 +59,7 @@ const typeDefs = gql`
     tags: [tagsType]
     reviews: [Review]
     related_products: [Product]
+    length: Int
   }
 
   type OrderProduct {
@@ -179,6 +181,7 @@ const typeDefs = gql`
     tag: String
     catName: String
     lth: Boolean
+    skip: Int
   }
 
   input orderedProduct {
@@ -225,6 +228,9 @@ const typeDefs = gql`
     invalidateTokens: Boolean!
     deleteProduct(id: String!): String
     addToOrder(input: OrderInput!): Order
+    confirmEmail(token: String!): String
+    forgotPassword(email: String!): Boolean
+    resetPasword(password: String!, token: String!, email: String!): Boolean
   }
 `;
 

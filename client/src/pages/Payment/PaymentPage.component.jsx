@@ -27,6 +27,8 @@ const PAYMENT = gql`
 `;
 
 const CheckoutForm = ({ total }) => {
+  const confirmState = useSelector((state) => state.user.userInfo.confirm);
+
   const stripe = useStripe();
   const elements = useElements();
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -52,6 +54,10 @@ const CheckoutForm = ({ total }) => {
 
   const logginStatus = useSelector((state) => state.user.loggedinStatus);
   const history = useHistory();
+
+  if (!confirmState) {
+    history.replace("/myaccount");
+  }
 
   if (cartItemArrayForPayment.length === 0) {
     history.push("/shop");

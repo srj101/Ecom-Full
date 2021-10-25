@@ -17,6 +17,7 @@ const ORDERS = gql`
         name
         image
         price
+        quantity
         desc {
           weight
           Dimensions
@@ -93,6 +94,9 @@ function Orders({ putkey }) {
                 />
                 {product.desc.weight || ""}
                 {product.desc.Dimensions || ""}
+              </div>
+              <div className="order-qty">
+                {product.quantity} <span>X</span>
               </div>
             </div>
           ))}

@@ -42,9 +42,7 @@ const FullMenu = () => {
             </Link>
           </div>
           <div className="menu__item" onClick={showSub}>
-            <Link to="/" onClick={() => setIsMenuOpen(false)}>
-              Pages
-            </Link>
+            <Link to="/">Pages</Link>
             <div className="sub_menu__item menu__item">
               <Link to="/about" onClick={() => setIsMenuOpen(false)}>
                 About Us
