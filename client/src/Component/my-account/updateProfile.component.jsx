@@ -115,6 +115,10 @@ function UpdateProfileSec() {
         },
       },
     });
+
+    if (!updatedUser.error) {
+      message.success("Saved!");
+    }
   };
 
   if (loading & !data) {
@@ -158,7 +162,6 @@ function UpdateProfileSec() {
         onFinish={onFinish}
         validateMessages={validateMessages}
       >
-        <p>{data && message.success("Saved!")}</p>
         <Form.Item
           name="firstname"
           label="FirstName"

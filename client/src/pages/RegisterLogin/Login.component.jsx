@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Container, Row, Col } from "react-bootstrap";
@@ -29,24 +29,21 @@ const LoginForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
     const { email, password } = values;
+    message.loading("Login in, Please give us a moment...");
     getLogin({
       variables: { loginEmail: email, loginPassword: password },
     });
+    if (error) {
+      message.error(error?.message);
+    } else {
+      dispatch(userLoginAction());
+      history.push("/myaccount");
+      message.success("successfully Logged in");
+    }
   };
 
   return (
     <Container>
-      <div className="error-message">
-        <p>
-          {loading
-            ? message.loading("Login in, Please give us a moment...")
-            : data && data?.login
-            ? (dispatch(userLoginAction()),
-              message.success("successfully Logged in"),
-              history.push("/myaccount"))
-            : error && message.error(error.message)}
-        </p>
-      </div>
       <Row className="justify-content-center">
         <Col lg={4}>
           <div className="login-form">

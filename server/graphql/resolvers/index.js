@@ -367,7 +367,7 @@ const resolvers = {
             service: "Gmail", // true for 465, false for other ports
             auth: {
               user: "salim15-3117@diu.edu.bd", // generated ethereal user
-              pass: "Salimkhan1@", // generated ethereal password
+              pass: "", // generated ethereal password
             },
           });
 
@@ -532,7 +532,7 @@ const resolvers = {
         service: "Gmail", // true for 465, false for other ports
         auth: {
           user: "salim15-3117@diu.edu.bd", // generated ethereal user
-          pass: "Salimkhan1@", // generated ethereal password
+          pass: "", // generated ethereal password
         },
       });
 
@@ -612,7 +612,7 @@ const resolvers = {
         service: "Gmail", // true for 465, false for other ports
         auth: {
           user: "salim15-3117@diu.edu.bd", // generated ethereal user
-          pass: "Salimkhan1@", // generated ethereal password
+          pass: "", // generated ethereal password
         },
       });
 

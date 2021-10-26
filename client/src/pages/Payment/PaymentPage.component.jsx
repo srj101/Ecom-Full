@@ -168,30 +168,34 @@ const CheckoutForm = ({ total }) => {
         </Row>
         <Row>
           <Col>
-            <Elements stripe={stripePromise}>
-              <form onSubmit={handleSubmit} className="form-row">
-                <CardElement onChange={handleChange} />
+            {stripe ? (
+              <Elements stripe={stripePromise}>
+                <form onSubmit={handleSubmit} className="form-row">
+                  <CardElement onChange={handleChange} />
 
-                <div className="payment__priceContainer">
-                  <CurrencyFormat
-                    renderText={() => <h3>Order Total: ${Total}</h3>}
-                    decimalScale={2}
-                    value={Total}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                  />
-                  <button
-                    disabled={processing || disabled || succeeded || !stripe}
-                  >
-                    <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
-                  </button>
-                </div>
+                  <div className="payment__priceContainer">
+                    <CurrencyFormat
+                      renderText={() => <h3>Order Total: ${Total}</h3>}
+                      decimalScale={2}
+                      value={Total}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                    />
+                    <button
+                      disabled={processing || disabled || succeeded || !stripe}
+                    >
+                      <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
+                    </button>
+                  </div>
 
-                {/* Errors */}
-                {error && <div>{error}</div>}
-              </form>
-            </Elements>
+                  {/* Errors */}
+                  {error && message.error(error)}
+                </form>
+              </Elements>
+            ) : (
+              "Loading..."
+            )}
           </Col>
         </Row>
       </Container>
